@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux' 
 import Question from './Question'
+import Navigation from './Navigation'
 
 class Dashboard extends Component {
   render() {
@@ -10,6 +11,7 @@ class Dashboard extends Component {
       	<div className="list-questions-title">
       		<h3>Would You Rather?</h3>
       	</div>
+      	<Navigation />
       	<div className="questions-title">
       		<div className="questions-header"><a href="#">Unanswered Questions</a></div>
       		<div className="questions-header"><a href="#">Answered Questions</a></div>

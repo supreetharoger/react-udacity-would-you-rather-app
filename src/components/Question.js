@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { formatQuestion } from '../utils/helpers'
 
 class Question extends Component {
   render() {
@@ -9,11 +10,11 @@ class Question extends Component {
     return (
       <div className="question">
        <div className="question-title">
-      		{question.author}<span> asks</span>
+        {question.username} <span> asks</span>
 		</div>
 		<div className="question-content">
 		<div className="question-avatar">
-Supi
+			<img className="avatar" src={question.avatarURL} />
 		</div>
 		<div className="question-poll">
 			Would you rather
@@ -28,7 +29,7 @@ Supi
 function mapStateToProps({authedUser, users, questions}, {id}) {
   const question = questions[id]
   return {
-    question: question
+    question: formatQuestion(question, users[question.author], authedUser)
   }
 }
 
