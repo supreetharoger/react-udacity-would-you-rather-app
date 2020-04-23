@@ -8,10 +8,6 @@ class Dashboard extends Component {
     console.log("KP",this.props.questionIds.length)
     return (
       <div className="list-questions">
-      	<div className="list-questions-title">
-      		<h3>Would You Rather?</h3>
-      	</div>
-      	<Navigation />
       	<div className="questions-title">
       		<div className="questions-header"><a href="#">Unanswered Questions</a></div>
       		<div className="questions-header"><a href="#">Answered Questions</a></div>
