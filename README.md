@@ -4,7 +4,7 @@ In the "Would You Rather?" Project, you'll build a web app that lets a user play
 
 ## Project Setup
 
-* Clone the project - https://github.com/supreetharoger/react-udacity-would-you-rather-app
+* Clone the project - https://github.com/supreetharoger/react-udacity-would-you-rather-app.git
 * Install the dependencies - npm install
 * Start the development server with npm start
 
