@@ -3,6 +3,7 @@ body {
   padding: 0;
   font-family: sans-serif;
   color: #252525;
+  overflow-x: hidden;
 }
 
 a {
@@ -84,6 +85,10 @@ a {
   padding: 10px;
 }
 
+.question-poll span {
+  font-size: 12px;
+  margin: 10px;
+}
 .question-poll button {
   background-color: #fff;
   border: 2px solid rgb(17, 228, 209);
@@ -98,6 +103,7 @@ a {
   display: block;
   width: 100%;
   border-radius: 5px;
+  margin-top: 10px;
 }
 
 .navigation-div {
@@ -108,9 +114,21 @@ a {
 .navigation-div li {
   list-style-type: none;
   width: 200px;
-  padding: 20px;
   cursor: pointer;
-  
+}
+
+.navigation-li-user {
+   list-style-type: none;
+  width: 200px;
+  cursor: pointer;
+  padding: 20px;
+}
+
+.navigation-link {
+  list-style-type: none;
+  cursor: pointer;
+  padding: 20px;
+  display: block;
 }
 
 .navigation-div li:hover {
@@ -228,3 +246,105 @@ a {
   padding: 15px;
 }
 
+.poll {
+  width: 50%;
+  margin: auto;
+  border: 1px solid #eee;
+  padding: 10px;
+}
+
+.question-poll .radio {
+  padding: 10px;
+}
+
+.poll-results {
+  width: 70%;
+  background-color: #a5efe8;
+  padding: 20px;
+  margin: auto;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.pollvote {
+    background-color: #eee;
+    width: 50px;
+    height: 50px;
+    border-radius: 20px;
+    text-align: center;
+    position: relative;
+    float: right;
+}
+
+.poll-results span {
+  display: block;
+  font-weight: bold;
+}
+
+.resultsbar {
+  border: 1px solid #eee;
+  background-color: #eee;
+  border-radius: 10px;
+  height: 30px;
+  margin: 10px;
+}
+
+.resultsbar div {
+  background-color: #34753c;
+  border-radius: 10px;
+}
+
+.resultsbar span {
+  display: block;
+  font-weight: bold;
+  text-align: center;
+  height: 30px;
+  margin: 0px;
+  color: #fff;
+}
+
+.signin {
+  width: 50%;
+  border: 1px solid #eee;
+  margin: auto;
+}
+
+.signin-title {
+  background-color: #eee;
+  text-align: center;
+}
+
+.signin-img {
+  width: 30%;
+  text-align: center;
+  margin: auto;
+}
+
+
+.signin-select {
+  width: 50%;
+  margin: auto;
+  padding: 10px;
+}
+
+.signin-select select {
+  border: 1px solid #eee;
+  width: 100%;
+  height: 40px;
+  margin: auto;
+}
+
+.signin-select button {
+  background-color: #1b5858;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  width: 100%;
+  margin: auto;
+  cursor: pointer;
+  margin-top: 20px;
+}

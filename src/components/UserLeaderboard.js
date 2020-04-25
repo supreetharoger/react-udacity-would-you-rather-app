@@ -5,11 +5,10 @@ import { formatUserLeaderboard } from '../utils/helpers'
 class UserLeaderboard extends Component {
   render() {
     const { user } = this.props
-    console.log("SUPIIIIIIIIII", user)
     return (
        	<div className="leaderboard">
       		<div className="lb-avatar">
-      			<img src={user.avatarURL} className="avatar"/>
+      			<img src={user.avatarURL} className="avatar" alt="avatar" />
       		</div>
       		<div className="lb-details">
       			<h3>{user.name}</h3>

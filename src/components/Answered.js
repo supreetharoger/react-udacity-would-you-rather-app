@@ -2,10 +2,9 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux' 
 import Question from './Question'
 import { Link } from 'react-router-dom'
-import { getUnansweredQuestions } from '../utils/helpers'
 
-class Dashboard extends Component {
-
+class Answered extends Component {
+  
   render() {
     return (
       <div className="list-questions">
@@ -17,7 +16,7 @@ class Dashboard extends Component {
        <ul>
       			{this.props.questionIds.map((id) => (
      				<li key={id}>
-      					<Question id={id} answered={false} />
+      					<Question id={id} answered={true}/> 
       				</li>
     			))}
 			 </ul> 
@@ -27,9 +26,10 @@ class Dashboard extends Component {
   }
 }
   
-function mapStateToProps({ questions, authedUser }) {
+function mapStateToProps({ authedUser, users }) {
+  const userID = authedUser
   return {
-    questionIds : getUnansweredQuestions(questions, authedUser),
+    questionIds: Object.keys(users[userID].answers),
   }
 }
-  export default connect(mapStateToProps)(Dashboard)
+  export default connect(mapStateToProps)(Answered)

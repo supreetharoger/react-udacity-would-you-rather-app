@@ -5,7 +5,6 @@ import UserLeaderboard from './UserLeaderboard'
 class Leaderboard extends Component {
   render() {
     const { userIds } = this.props
-    console.log(userIds)
     return (
       	<ul className="lb">
       		{userIds && userIds.map((id) => (
