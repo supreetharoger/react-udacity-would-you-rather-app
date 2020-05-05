@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { handleAuthentication } from '../actions/shared'
+import { handleInitialData } from '../actions/shared'
 import Dashboard from './Dashboard'
 import LoadingBar from 'react-redux-loading'
 import NewQuestion from './NewQuestion'
@@ -20,8 +20,7 @@ class App extends Component {
     loading: false
   }
   componentDidMount() {
-    
-    this.props.dispatch(handleAuthentication())
+    this.props.dispatch(handleInitialData())
 	.then(() => {
       this.setState({
         loading: true
@@ -39,12 +38,12 @@ class App extends Component {
      <div>
       		
       {loading && <Switch>
-       			<PublicRoute path="/" exact />
+       			<PublicRoute authedUser={this.props.authedUser} path="/" exact />
        			<Route path="/login" component={Signin} />
-				<PrivateRoute path="/home" exact component={Dashboard} />
-      			<PrivateRoute path="/add" component={NewQuestion} />
-				<PrivateRoute path="/questions/:id" component={Poll} />
-				<PrivateRoute path="/poll/:id" component={PollResults} />
+				<PrivateRoute authedUser={this.props.authedUser} path="/home" exact component={Dashboard} />
+      			<PrivateRoute authedUser={this.props.authedUser} path="/add" component={NewQuestion} />
+				<PrivateRoute authedUser={this.props.authedUser} path="/questions/:id" component={Poll} />
+				<PrivateRoute authedUser={this.props.authedUser} path="/poll/:id" component={PollResults} />
 	  			<Route path="/leaderboard" component={Leaderboard} />
 				<Route path="/error" component={Error} />
 				<Route component={PageNotFound} />

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import ReactLogo from '../logo.svg'
-import { handleInitialData } from '../actions/shared'
+import { signinData } from '../actions/shared'
 import { Redirect } from 'react-router-dom' 
 
 class Signin extends Component {
@@ -26,7 +26,7 @@ class Signin extends Component {
       alert("Please select User")
       return
     }
-    dispatch(handleInitialData(option))
+    dispatch(signinData(option))
     .then(() => {
     	this.setState(() => ({
       		option: '',
