@@ -44,7 +44,7 @@ class PollResults extends Component {
 }
 
 function mapStateToProps ({ authedUser, questions, users }, props) {
-  const { id } = props.match.params
+  const id  = props.id
   const question = questions[id]
   return {
     question: formatPollResults(question, users[question.author], users[authedUser]),

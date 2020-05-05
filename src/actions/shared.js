@@ -21,7 +21,7 @@ export function handleInitialData(id) {
 export function logout() {
   return (dispatch) => {
     localStorage.removeItem('usertoken')
-    dispatch(setAuthedUser({}))
+    dispatch(setAuthedUser(null))
     dispatch(showLoading())
     return getSigninData()
     	.then(({users}) => {

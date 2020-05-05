@@ -5,6 +5,7 @@ import { receiveUsers } from '../actions/users'
 
 export const RECEIVE_QUESTIONS='RECEIVE_QUESTIONS'
 export const ADD_QUESTION = 'ADD_QUESTION'
+export const ADD_USER_QUESTION = 'ADD_USER_QUESTION'
 
 function addQuestion(question) {
   return {
@@ -13,16 +14,27 @@ function addQuestion(question) {
   }
 }
 
+function addUserQuestion(question, users) {
+  return {
+    type: ADD_USER_QUESTION,
+    question,
+    users
+  }
+}
+
 export function handleNewQuestion(optionOne, optionTwo) {
   return(dispatch, getState) => {
-    const { authedUser } = getState()
+    const { authedUser, users } = getState()
     dispatch(showLoading)
     return saveQuestion({
       optionOneText: optionOne,
       optionTwoText: optionTwo,
       author: authedUser
     })
-    .then((question) => dispatch(addQuestion(question)))
+    .then((question) => {
+          dispatch(addQuestion(question))
+          dispatch(addUserQuestion(question, users))
+    })
     .then(() => dispatch(hideLoading))
   }
 }

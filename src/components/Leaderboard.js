@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import UserLeaderboard from './UserLeaderboard'
+import { sortLeaderboard } from '../utils/helpers'
 
 class Leaderboard extends Component {
   render() {
@@ -20,7 +21,7 @@ class Leaderboard extends Component {
 
 function mapStateToProps({users}) {
   return {
-    userIds: Object.keys(users)
+    userIds: sortLeaderboard(users)
   }
 }
 export default connect(mapStateToProps)(Leaderboard)

@@ -184,7 +184,6 @@ export function _saveQuestionAnswer ({ authedUser, qid, answer }) {
         }
       }
       
-      console.log("Users" , users)
       questions = {
         ...questions,
         [qid]: {

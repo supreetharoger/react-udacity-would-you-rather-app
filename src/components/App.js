@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { handleAuthentication } from '../actions/shared'
 import Dashboard from './Dashboard'
@@ -10,36 +10,46 @@ import Navigation from './Navigation'
 import Poll from './Poll'
 import PollResults from './PollResults'
 import Signin from './Signin'
-import Answered from './Answered'
+import PrivateRoute from './PrivateRoute'
+import PublicRoute from './PublicRoute'
+import PageNotFound from './PageNotFound'
+import Error from './Error'
 
 class App extends Component {
-
+  state = {
+    loading: false
+  }
   componentDidMount() {
+    
     this.props.dispatch(handleAuthentication())
+	.then(() => {
+      this.setState({
+        loading: true
+      })
+    })
   }
   
   render() { 
-    const auth = this.props.authedUser && Object.keys(this.props.authedUser).length
+	const { loading } = this.state
     return (
       <Router>
       <Fragment>
       <LoadingBar />
-      {(this.props.authedUser !== null && auth !== 0 ) &&
-       <Navigation />}
-       {(this.props.authedUser === null || auth === 0 )  && 
-       <div>
-        		<Route path="/" component={Signin} />
-		</div> }
-      {(this.props.authedUser !== null || auth !== 0) && this.props.loading && this.props.loading === true ? null :
-		<div>
-			<Route path="/home" exact component={Dashboard} />
-      		<Route path="/add" component={NewQuestion} />
-			<Route path="/questions/:id" component={Poll} />
-			<Route path="/poll/:id" component={PollResults} />
-	  		<Route path="/leaderboard" component={Leaderboard} />
-			<Route path="/answered" component={Answered} />
-		</div>}
-     
+      <Navigation />  
+     <div>
+      		
+      {loading && <Switch>
+       			<PublicRoute path="/" exact />
+       			<Route path="/login" component={Signin} />
+				<PrivateRoute path="/home" exact component={Dashboard} />
+      			<PrivateRoute path="/add" component={NewQuestion} />
+				<PrivateRoute path="/questions/:id" component={Poll} />
+				<PrivateRoute path="/poll/:id" component={PollResults} />
+	  			<Route path="/leaderboard" component={Leaderboard} />
+				<Route path="/error" component={Error} />
+				<Route component={PageNotFound} />
+			</Switch>}
+		</div>
       </Fragment>
 	  </Router>
       )
@@ -47,9 +57,7 @@ class App extends Component {
 }
 
 function mapStateProps({authedUser}) {
-  const auth = authedUser && Object.keys(authedUser).length
   return {
-    loading: authedUser === null || auth === 0 ,
     authedUser
   }
 }

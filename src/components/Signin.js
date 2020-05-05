@@ -27,19 +27,24 @@ class Signin extends Component {
       return
     }
     dispatch(handleInitialData(option))
-    this.setState(() => ({
-      option: '',
-      toHome: true
-    }))
+    .then(() => {
+    	this.setState(() => ({
+      		option: '',
+      		toHome: true
+    	}))
+    })
     
   }
 
   render () {
-    const { users } = this.props
+    const { users, pathname } = this.props
 	const { toHome } = this.state
 
 	if(toHome) {
-      return <Redirect to="/home" />
+      return <Redirect to={{
+          pathname: pathname,
+          state: { from: this.props.location }
+        }} />
     }
 
     return (
@@ -69,9 +74,11 @@ class Signin extends Component {
   }
   }
 
-function mapStateToProps({users}) {
+function mapStateToProps({users}, props) {
+  const pathname = props.location.state ? props.location.state.from.pathname : '/home'
   return {
-    users: users
+    users: users,
+    pathname
   }
 }
 

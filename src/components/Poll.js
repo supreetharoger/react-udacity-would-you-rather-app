@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { formatQuestion } from '../utils/helpers'
+import { formatQuestion, checkUserAnswered } from '../utils/helpers'
 import { handlePollQuestion } from '../actions/questions'
 import { Redirect } from 'react-router-dom'
+import PollResults from './PollResults'
 
 class Poll extends Component {
   state = {
-    selectedOption: '',
-    toPollResults: false
+    selectedOption: ''
   }
 
   handleChange = (e) => {
@@ -26,23 +26,22 @@ class Poll extends Component {
       return
     }
     dispatch(handlePollQuestion(selectedOption, id))
-    
+    .then(() => {
  	this.setState(() => ({
-      selectedOption: '',
-      toPollResults: true
+      selectedOption: ''
     }))
+    })
   }
 
   render() {
-    const { question } = this.props
-	const { toPollResults } = this.state
-
-	if(toPollResults) {
-      return <Redirect to={`/poll/${question.id}`} />
-    }
-
+    if (this.props.error && this.props.error.exists) {
+    	return <Redirect to='/error' />
+	}
+    const { question, answered } = this.props
+	
     return (
-      	<div className="poll">
+     <div>
+      {(!answered) && <div className="poll">
        <div className="question-title">
         {question.username} <span> asks</span>
 		</div>
@@ -65,15 +64,24 @@ class Poll extends Component {
 			</form>
 		</div>
 		</div>
-      </div>
+      </div> }
+{ (answered )&& 
+ <div> <PollResults id={question.id}/> </div> }
+ </div>
       )
   }
 }
 function mapStateToProps ({ authedUser, questions, users }, props) {
   const { id } = props.match.params
   const question = questions[id]
+  if(question === undefined) {
+	return {
+		error: {exists: true, name: "Question does not exist"}
+	}
+  }
   return {
     question: formatQuestion(question, users[question.author], authedUser),
+    answered: checkUserAnswered(question, users[authedUser]),
     id: question.id
   }
   }

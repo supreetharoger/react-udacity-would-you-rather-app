@@ -11,22 +11,29 @@ export function formatQuestion(question, author, authedUser) {
     avatarURL
   }
 }
-export function getUnansweredQuestions(questions, authedUser) {
-  const questionIds = []
-  Object.keys(questions).forEach((id) => {
-    const question = questions[id]
-    const optionOneVotes = question.optionOne.votes
-    const optionTwoVotes = question.optionTwo.votes
-    let exists = false
-    if((optionOneVotes.length !== 0 && optionOneVotes.includes(authedUser)) || 
-       	(optionTwoVotes.length !== 0 && optionTwoVotes.includes(authedUser))) {
-      	exists = true
+export function getSortedQuestions(questions, authedUser, users) {
+  const questionIds = Object.keys(questions)
+    .sort((a, b) => questions[b].timestamp - questions[a].timestamp);
+    let answeredQuestions = {}, unansweredQuestions = {};
+    if(authedUser) {
+        answeredQuestions = questionIds.filter((id) => (users[authedUser].answers[id]))
+        unansweredQuestions = questionIds.filter((id) => (!answeredQuestions.includes(id)))
     }
-    if(!exists) {
-      questionIds.push(id)
+
+    return {
+        answeredQuestions,
+        unansweredQuestions
     }
-  })
-  return questionIds
+}
+
+export function checkUserAnswered(question, author) {
+  const { id } = question
+  const { answers } = author
+  let answerIds = Object.keys(answers)
+  if(answerIds.includes(id)) {
+    return true
+  }
+  return false
 }
 
 export function formatPollResults(question, author, authedUser) {
@@ -62,9 +69,21 @@ export function formatPollResults(question, author, authedUser) {
   }
 }
 
+export function sortLeaderboard(users) {
+  return Object.keys(users)
+    .sort((a,b) => {
+      const answersA = Object.keys(users[a].answers).length
+      const questionsA = users[a].questions.length
+
+      const answersB = Object.keys(users[b].answers).length
+      const questionsB = users[b].questions.length
+
+      return (answersB + questionsB) - (answersA + questionsA)
+    })
+}
+
 export function formatUserLeaderboard(user) {
   const { id, name, avatarURL, answers, questions } = user
-  
   let answeredquestions = Object.keys(answers).length
   let createdquestions = questions.length
   let score = answeredquestions + createdquestions
@@ -77,4 +96,13 @@ export function formatUserLeaderboard(user) {
     createdquestions,
     score
   }
+}
+
+
+export const isAuthenticated = () => {
+    if (localStorage.getItem('usertoken')) {
+        return true;
+    }
+
+    return false;
 }

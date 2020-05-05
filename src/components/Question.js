@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 
 class Question extends Component {
   render() {
-    const { question, answered } = this.props
+    const { question } = this.props
 
     return (
       <div className="question">
@@ -18,13 +18,9 @@ class Question extends Component {
 		</div>
 		<div className="question-poll">
 			<span> Would you rather {question.optionOne.text} OR {question.optionTwo.text}</span>
-			{!answered ? 
 			<Link to={`/questions/${question.id}`}>
 			<button>View Poll</button>
-			</Link> :
-			<Link to={`/poll/${question.id}`}>
-			<button>View Poll</button>
-			</Link> }
+			</Link>
 		</div>
 		</div>
       </div>
@@ -34,12 +30,10 @@ class Question extends Component {
 
 function mapStateToProps({authedUser, users, questions}, props) {
   const id = props.id
-  const answered = props.answered
   const question = questions[id]
 
   return {
     question: formatQuestion(question, users[question.author], authedUser),
-	answered
   }
 }
 
