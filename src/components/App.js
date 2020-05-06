@@ -11,7 +11,6 @@ import Poll from './Poll'
 import PollResults from './PollResults'
 import Signin from './Signin'
 import PrivateRoute from './PrivateRoute'
-import PublicRoute from './PublicRoute'
 import PageNotFound from './PageNotFound'
 import Error from './Error'
 
@@ -38,15 +37,15 @@ class App extends Component {
      <div>
       		
       {loading && <Switch>
-       			<PublicRoute authedUser={this.props.authedUser} path="/" exact />
+       			<PrivateRoute authedUser={this.props.authedUser} path="/" exact component={Dashboard} />
        			<Route path="/login" component={Signin} />
 				<PrivateRoute authedUser={this.props.authedUser} path="/home" exact component={Dashboard} />
       			<PrivateRoute authedUser={this.props.authedUser} path="/add" component={NewQuestion} />
 				<PrivateRoute authedUser={this.props.authedUser} path="/questions/:id" component={Poll} />
 				<PrivateRoute authedUser={this.props.authedUser} path="/poll/:id" component={PollResults} />
-	  			<Route path="/leaderboard" component={Leaderboard} />
-				<Route path="/error" component={Error} />
-				<Route component={PageNotFound} />
+	  			<PrivateRoute path="/leaderboard" component={Leaderboard} />
+				<PrivateRoute path="/error" component={Error} />
+				<PrivateRoute component={PageNotFound} />
 			</Switch>}
 		</div>
       </Fragment>
